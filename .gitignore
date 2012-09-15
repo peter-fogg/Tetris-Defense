@@ -1,0 +1,6 @@
+# Keep Library outta there.
+Library/
+Temp/
+
+# other stuff
+.DS_Store
