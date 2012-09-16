@@ -1,9 +1,12 @@
 #pragma strict
 
-var board : Array;
+public static var board : float[,];
+public static var height : float;
+public static var width : float;
+public static var mainCamera : Camera;
 
 function Start () {
-    timestep = 1.0;
+    
 }
 
 function Update () {
