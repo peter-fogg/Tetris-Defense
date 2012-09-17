@@ -5,9 +5,11 @@
 
 var	health			:float; //keeps track of how much health the creature has
 var inRange			:boolean; //whether or not the creature is in range of a tower
+var damage			:float; //keeps track of how much damage the creature deals
 
 function Start () {
 	health = 5;
+	damage = 1;
 }
 
 function Update () {
@@ -35,7 +37,11 @@ function move ( /*towers */ ) {
 
 }
 
-function attack () {
+function attack ( /* Tower */ ) {
+//~~~inflicts damage to a tower~~~
+	
+	//inflicts "damage" amount of damage to a tower's health
+	GetComponent(Tower).tower.health -= damage;
 
 }
 
