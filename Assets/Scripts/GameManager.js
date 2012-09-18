@@ -25,7 +25,7 @@ function Start () {
 }
 
 function Update () {
-    //places a tower where the player right-clicks
+    /*//places a tower where the player right-clicks
 	if(Input.GetMouseButtonDown(1)) {
 		var mousePos: Vector3 = Input.mousePosition;
 		//Debug.Log(mousePos);
@@ -34,7 +34,7 @@ function Update () {
 		// var towerClone = Instantiate(tower, worldPos, Quaternion.identity);
 		Debug.Log(worldPos);
 		makeTower(worldPos);
-	}
+	}*/
 	
 }
 
