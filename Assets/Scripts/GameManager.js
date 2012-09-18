@@ -45,4 +45,5 @@ function Update () {
 function makeTower(pos: Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 	tower.transform.position = pos;
+	tower.AddComponent(Tower);
 }
