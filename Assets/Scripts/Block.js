@@ -14,7 +14,7 @@ function Start () {
 function Update () {
     CheckPosition();
     if(Time.time > lastMoved + GameManager.timestep && isMoving) {
-    	transform.position = transform.position + Time.deltaTime * Vector3(0, -40, 0);
+    	transform.position.y -= 1;
 	lastMoved = Time.time;
     }
     // check if we're too low
@@ -29,8 +29,8 @@ function CheckPosition() {
 	return;
     }
     for(var b : GameObject in GameManager.blockList) {
-	if(Mathf.Abs(b.transform.position.y - transform.position.y) < .1) { // too close!
-	    print(b.transform.position - transform.position);
+	if(Mathf.Abs(b.transform.position.y - transform.position.y) <= 1
+	  && b != gameObject) { // too close!
 	    isMoving = false;
 	    return;
 	}

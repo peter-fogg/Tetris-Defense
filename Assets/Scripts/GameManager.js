@@ -14,9 +14,8 @@ public var block : Block; // for Instantiate()
 
 function Start () {
     blockList = new List.<GameObject>();
-    MakeBlock(new Vector3(0, 0, 0));
-    MakeBlock(new Vector3(0, 2, 0));
-
+    MakeBlock(Vector3(0, 0, 0));
+    MakeBlock(Vector3(0, 2, 0));
     timestep = 1.0;
     lastMoved = Time.time;
     // figure out what bottomRow should be
