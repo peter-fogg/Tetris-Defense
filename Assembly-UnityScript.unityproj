@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Block.js" />
      <Compile Include="Assets\Scripts\BlockGroup.js" />
+     <Compile Include="Assets\Scripts\Bullet.js" />
      <Compile Include="Assets\Scripts\Creature.js" />
      <Compile Include="Assets\Scripts\GameManager.js" />
      <Compile Include="Assets\Scripts\Tower.js" />
