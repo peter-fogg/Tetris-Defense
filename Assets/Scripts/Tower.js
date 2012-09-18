@@ -5,6 +5,7 @@ var health			:float; //keeps track of how much health the tower has
 var damage			:float;	//keeps track of how much damage the tower deals
 //var prefabBullet	:Transform; //stores the bullet that the tower fires
 //var range			:float;	//keeps track of the the range of the turret
+var base: 			Block; //keeps track of the block that the tower is placed on
 
 function Start () {
 	health = 10;
@@ -26,4 +27,9 @@ function Update () {
 
 function attack() {
 
+}
+
+function OnMouseDown() {
+	if(base.group.isMoving === false)
+		base.group.Rotate();
 }

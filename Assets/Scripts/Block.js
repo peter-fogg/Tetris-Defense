@@ -34,4 +34,5 @@ function makeTower(pos : Vector3) {
 	tower.transform.position = pos;
 	tower.AddComponent(Tower);
 	tower.transform.parent = transform;
+	tower.GetComponent(Tower).base = this;
 }
