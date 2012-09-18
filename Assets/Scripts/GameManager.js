@@ -50,5 +50,4 @@ function MakeBlock(pos : Vector3) {
     block.AddComponent(Block);
     block.transform.position = pos;
     blockList.Add(block);
-
 }
