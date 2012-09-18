@@ -3,12 +3,13 @@
 var lastMoved : float;
 var health : float;
 var isMoving : boolean; // solidified or not
-var tower : Tower; // might not be necessary?
+var isOccupied: boolean;
 
 // Create the cube and any other bits.
 function Start () {
     isMoving = true;
     lastMoved = Time.time;
+    isOccupied = false;
 }
 
 function Update () {
@@ -36,4 +37,22 @@ function CheckPosition() {
 	    return;
 	}
     }
+}
+
+function OnMouseOver() {
+	if(Input.GetMouseButtonDown(1)) {
+		var towerPos: Vector3 = transform.position;
+		Debug.Log(towerPos);
+		towerPos.z -= 1;
+		makeTower(towerPos);
+		isOccupied = true;
+	}
+}
+
+function makeTower(pos : Vector3) {
+	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+	tower.transform.position = pos;
+	//tower.transform.Rotate(new Vector3(90, 0, 0));
+	tower.AddComponent(Tower);
+	tower.transform.parent = transform;
 }
