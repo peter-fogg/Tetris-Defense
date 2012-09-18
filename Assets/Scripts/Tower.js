@@ -14,7 +14,7 @@ function Start () {
 function Update () {
 	//if the tower's health is depleted, destroy the tower
 	if (health == 0) {
-		Destroy(gameobject);
+		Destroy(gameObject);
 	}
 	
 	//otherwise, attack the nearest tower
