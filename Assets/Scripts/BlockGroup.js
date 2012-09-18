@@ -26,7 +26,6 @@ function Start () {
 	blocks[1] = MakeBlock(Vector3(0, -1, 0));
 	blocks[2] = MakeBlock(Vector3(0, -2, 0));
 	blocks[3] = MakeBlock(Vector3(1, -2, 0));
-	lowestBlock = blocks[2];
 	break;
     case 1:
 	blockType = BlockType.T_BLOCK;
@@ -35,7 +34,6 @@ function Start () {
 	blocks[1] = MakeBlock(Vector3(-1, 0, 0));
 	blocks[2] = MakeBlock(Vector3(1, 0, 0));
 	blocks[3] = MakeBlock(Vector3(0, -1, 0));
-	lowestBlock = blocks[3];
 	break;
     case 2:
 	blockType = BlockType.SQUARE_BLOCK;
@@ -44,7 +42,6 @@ function Start () {
 	blocks[1] = MakeBlock(Vector3(-1, 0, 0));
 	blocks[2] = MakeBlock(Vector3(-1, -1, 0));
 	blocks[3] = MakeBlock(Vector3(0, -1, 0));
-	lowestBlock = blocks[3];
 	break;
     case 3:
 	blockType = BlockType.LONG_BLOCK;
@@ -52,17 +49,29 @@ function Start () {
 	blocks[0] = MakeBlock(Vector3(0, 0, 0));
 	blocks[1] = MakeBlock(Vector3(0, -1, 0));
 	blocks[2] = MakeBlock(Vector3(0, -2, 0));
-	lowestBlock = blocks[2];
 	break;
     }
 }
 
 function Update () {
+    GetLowestBlock();
     CheckPosition();
     if(isMoving && Time.time > lastMoved + GameManager.timestep) {
 	transform.position.y -= 1;
 	lastMoved = Time.time;
     }
+}
+
+// figure out what the lowest block is -- it changes when we rotate
+function GetLowestBlock() {
+    var lowest : GameObject = blocks[0];
+    for(var b : GameObject in blocks) {
+	if(b.transform.position.y < lowest.transform.position.y) {
+	    lowest = b;
+	}
+    }
+    lowestBlock = lowest;
+    return lowest;
 }
 
 function MakeBlock(pos : Vector3) {
@@ -84,9 +93,9 @@ function CheckPosition() {
 	isMoving = false;
     }
     for(var b : GameObject in GameManager.blockList) {
-	if(ArrayUtility.Contains.<GameObject>(blocks, b) && // it's not us
+	if(!ArrayUtility.Contains.<GameObject>(blocks, b) && // it's not us
 	   b.GetComponent(Block).group.isMoving == false && // and it's solid
-	   Mathf.Abs(b.transform.position.y - lowestBlock.transform.position.y) <= 1 + .01) { // too close! + epsilon
+	   Mathf.Abs(b.transform.position.y - lowestBlock.transform.position.y) <= 1) { // too close! + epsilon
 	    isMoving = false;
 	    return;
 	}
@@ -94,5 +103,7 @@ function CheckPosition() {
 }
 
 function Rotate () {
-    transform.Rotate(Vector3(0, 0, 90));
+    if(blockType != BlockType.SQUARE_BLOCK && isMoving) {
+	transform.Rotate(Vector3(0, 0, 90));
+    }
 }
