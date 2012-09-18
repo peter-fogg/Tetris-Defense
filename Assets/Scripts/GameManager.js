@@ -5,17 +5,36 @@ public static var height : float;
 public static var width : float;
 public static var mainCamera : Camera;
 
+
+import System.Collections.Generic;
+
+public static var blockList : List.<GameObject>;
+public static var height : float;
+public static var width : float;
+public static var bottomRow : float; // the lowest we can go on the screen
+
 public static var timestep : float; // how often to move
 var lastMoved : float; // when we last moved
 
 public var block : Block; // for Instantiate()
 
 function Start () {
+<<<<<<< HEAD
+    blockList = new List.<GameObject>();
+=======
+
     var b : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
     b.AddComponent(Block);
     b.transform.position = Vector3(0, 0, 0);
+
+>>>>>>> cf30c2c974a4aca825224912f30798968172e605
+    MakeBlock(new Vector3(0, 0, 0));
+    MakeBlock(new Vector3(0, 2, 0));
+
     timestep = 1.0;
     lastMoved = Time.time;
+    // figure out what bottomRow should be
+    bottomRow = Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).y + 1;
 }
 
 function Update () {
@@ -36,4 +55,14 @@ function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 	tower.transform.position = pos;
 	tower.AddComponent(Tower);
+
+
+}
+
+function MakeBlock(pos : Vector3) {
+    var block : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+    block.AddComponent(Block);
+    block.transform.position = pos;
+    blockList.Add(block);
+
 }
