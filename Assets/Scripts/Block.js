@@ -20,7 +20,7 @@ function OnMouseOver () {
     if(Input.GetMouseButtonDown(0)) {
 	group.Rotate();
     }
-    if(Input.GetMouseButtonDown(1)) {
+    if(Input.GetMouseButtonDown(1) && isOccupied === false) {
 	var towerPos: Vector3 = transform.position;
 	Debug.Log(towerPos);
 	towerPos.z -= 1;
@@ -32,7 +32,6 @@ function OnMouseOver () {
 function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 	tower.transform.position = pos;
-	//tower.transform.Rotate(new Vector3(90, 0, 0));
 	tower.AddComponent(Tower);
 	tower.transform.parent = transform;
 }
