@@ -15,11 +15,9 @@ public var blockGroup : BlockGroup; // for Instantiate()
 
 function Start () {
     blockList = new List.<GameObject>();
-//    MakeBlock(Vector3(0, 0, 0));
-//    MakeBlock(Vector3(0, 2, 0));
     var obj : GameObject = new GameObject();
     obj.AddComponent(BlockGroup);
-    timestep = 1.0;
+    timestep = 0.5;
     lastMoved = Time.time;
     // figure out what bottomRow should be
     bottomRow = Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).y + 1;
