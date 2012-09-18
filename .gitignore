@@ -2,5 +2,9 @@
 Library/
 Temp/
 
+
 # other stuff
 .DS_Store
+*.pidb
+
+Assembly-UnityScript.pidb

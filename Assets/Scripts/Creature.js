@@ -20,6 +20,10 @@ function Update () {
 
 	if ( !inrange ) {
 		move( towers );
+
+	if ( !inRange ) {
+		move(  towers  );
+
 	}
 	
 	else {
