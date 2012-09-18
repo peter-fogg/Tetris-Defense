@@ -12,6 +12,7 @@ var lastMoved : float; // when we last moved
 public var block : Block; // for Instantiate()
 
 function Start () {
+    blockList = new List.<GameObject>();
     MakeBlock(new Vector3(0, 0, 0));
     MakeBlock(new Vector3(0, 2, 0));
     timestep = 1.0;
