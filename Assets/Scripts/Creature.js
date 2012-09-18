@@ -1,4 +1,6 @@
 #pragma strict
+/*
+
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 //Devon Wells 
 //CS 361
@@ -17,7 +19,7 @@ function Update () {
 //~~~If the creature is in range of the tower, attacks
 
 	if ( !inrange ) {
-		move( /* towers */ );
+		move( towers );
 	}
 	
 	else {
@@ -32,7 +34,7 @@ function Update () {
 
 }
 
-function move ( /*towers */ ) {
+function move ( towers  ) {
 //~~~finds the shortest Path to the nearest tower~~~
 
 //check to make sure not next to tower
@@ -43,7 +45,7 @@ function move ( /*towers */ ) {
 
 }
 
-function attack ( /* Tower */ ) {
+function attack ( Tower ) {
 //~~~inflicts damage to a tower~~~
 	
 	//inflicts "damage" amount of damage to a tower's health
@@ -51,3 +53,4 @@ function attack ( /* Tower */ ) {
 
 }
 
+*/
