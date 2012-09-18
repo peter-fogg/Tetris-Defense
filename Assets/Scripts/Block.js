@@ -29,8 +29,9 @@ function CheckPosition() {
 	return;
     }
     for(var b : GameObject in GameManager.blockList) {
-	if(Mathf.Abs(b.transform.position.y - transform.position.y) <= 1
-	  && b != gameObject) { // too close!
+	if(b != gameObject && // it's not us
+	   b.GetComponent(Block).isMoving == false && // and it's solid
+	   Mathf.Abs(b.transform.position.y - transform.position.y) <= 1) { // too close!
 	    isMoving = false;
 	    return;
 	}
