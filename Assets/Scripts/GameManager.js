@@ -17,7 +17,7 @@ public var blockGroup : BlockGroup; // for Instantiate()
 function Start () {
     blockList = new List.<GameObject>();
     timestep = 0.2;
-    spawnStep = 1.0;
+    spawnStep = .5;
     lastSpawned = Time.time; // spawn a block right away
     // figure out what bottomRow should be
     bottomRow = Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).y + 1;
@@ -44,7 +44,6 @@ function Update () {
 function MakeBlockGroup () {
     var obj : GameObject = new GameObject();
     obj.AddComponent(BlockGroup);
-    // TODO: get horizontal position right
 }
 
 function makeTower(pos : Vector3) {

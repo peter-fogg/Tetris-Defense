@@ -14,7 +14,10 @@ var lastMoved : float;
 var isMoving : boolean;
 
 function Start () {
-    transform.position = Vector3(0, GameManager.topRow, 0);
+    var screenWidth : float = Camera.main.ScreenToWorldPoint(Vector3(Camera.main.pixelWidth, 0, 0)).x -
+	Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).x;
+    var x : int = Mathf.FloorToInt(Random.Range(-screenWidth/2, screenWidth/2));
+    transform.position = Vector3(x, GameManager.topRow, 0);
     isMoving = true;
     lastMoved = Time.time;
     var type : int = Random.Range(0, 3);
@@ -92,12 +95,16 @@ function CheckPosition() {
     if(lowestBlock.transform.position.y < GameManager.bottomRow) {
 	isMoving = false;
     }
-    for(var b : GameObject in GameManager.blockList) {
-	if(!ArrayUtility.Contains.<GameObject>(blocks, b) && // it's not us
-	   b.GetComponent(Block).group.isMoving == false && // and it's solid
-	   Mathf.Abs(b.transform.position.y - lowestBlock.transform.position.y) <= 1) { // too close! + epsilon
-	    isMoving = false;
-	    return;
+    // wow! this is inefficient! but it seems to work for now...
+    for(var thisBlock : GameObject in blocks) {
+	for(var otherBlock : GameObject in GameManager.blockList) {
+	    if(!ArrayUtility.Contains.<GameObject>(blocks, otherBlock) &&
+	       otherBlock.GetComponent(Block).group.isMoving == false &&
+	       otherBlock.transform.position.x == thisBlock.transform.position.x &&
+	       Mathf.Abs(otherBlock.transform.position.y - thisBlock.transform.position.y) <= 1) {
+		isMoving = false;
+		return;
+	    }
 	}
     }
 }
