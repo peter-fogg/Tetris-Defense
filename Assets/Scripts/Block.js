@@ -2,14 +2,14 @@
 
 //var lastMoved : float;
 var health : float;
-<<<<<<< HEAD
 //var isMoving : boolean; // solidified or not
 var tower : Tower; // might not be necessary?
+var isOccupied : boolean;
 var group : BlockGroup; // our parent
 
 // Create the cube and any other bits.
 function Start () {
-    
+    isOccupied = false;
 }
 
 function Update () {
