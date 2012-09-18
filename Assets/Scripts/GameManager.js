@@ -1,11 +1,11 @@
 #pragma strict
 
-public static var board : Array;
+public static var board : Block[,];
 public static var height : float;
 public static var width : float;
 public static var mainCamera : Camera;
 
-var timestep : float; // how often to move
+public static var timestep : float; // how often to move
 var lastMoved : float; // when we last moved
 
 public var block : Block; // for Instantiate()
@@ -14,21 +14,26 @@ function Start () {
     var b : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
     b.AddComponent(Block);
     b.transform.position = Vector3(0, 0, 0);
-    height = 10;
-    width = 10;
-    board = new Array();
-    for(var i : int = 0; i < height; i++) {
-	var arr : Array = new Array();
-	board.push(arr);
-    }
-    var foo : Array = board[2] as Array;
-    foo.push(b);
     timestep = 1.0;
     lastMoved = Time.time;
 }
 
 function Update () {
-//    for(var arr : Array in board) {
+    //places a tower where the player right-clicks
+	if(Input.GetMouseButtonDown(1)) {
+		var mousePos: Vector3 = Input.mousePosition;
+		//Debug.Log(mousePos);
+		mousePos.z = 20; //some arbitrary distance from the camera, can be determined later
+		var worldPos: Vector3 = Camera.main.ScreenToWorldPoint(mousePos);
+		// var towerClone = Instantiate(tower, worldPos, Quaternion.identity);
+		Debug.Log(worldPos);
+		makeTower(worldPos);
+	}
 	
-//    }
+}
+
+function makeTower(pos : Vector3) {
+	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+	tower.transform.position = pos;
+	tower.AddComponent(Tower);
 }
