@@ -5,7 +5,7 @@ public static var height : float;
 public static var width : float;
 public static var mainCamera : Camera;
 
-var timestep : float; // how often to move
+public static var timestep : float; // how often to move
 var lastMoved : float; // when we last moved
 
 public var block : Block; // for Instantiate()
@@ -19,16 +19,6 @@ function Start () {
 }
 
 function Update () {
-    /*if(Time.time > lastMoved + timestep) {
-	for(var row : Block[] in board) {
-	    for(var block : Block in row) {
-		if(block != null) {
-		    block.transform.position.y += 1;
-		}
-	    }
-	}
-    }
-    */
     //places a tower where the player right-clicks
 	if(Input.GetMouseButtonDown(1)) {
 		var mousePos: Vector3 = Input.mousePosition;
@@ -42,7 +32,7 @@ function Update () {
 	
 }
 
-function makeTower(pos: Vector3) {
+function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 	tower.transform.position = pos;
 	tower.AddComponent(Tower);
