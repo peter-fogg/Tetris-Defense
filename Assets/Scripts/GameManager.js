@@ -16,10 +16,13 @@ function Start () {
     b.transform.position = Vector3(0, 0, 0);
     height = 10;
     width = 10;
-    board = new Array(height);
-    for(var i = 0; i < board.length; i++) {
-	board.push(new Array(width));
+    board = new Array();
+    for(var i : int = 0; i < height; i++) {
+	var arr : Array = new Array();
+	board.push(arr);
     }
+    var foo : Array = board[2] as Array;
+    foo.push(b);
     timestep = 1.0;
     lastMoved = Time.time;
 }
