@@ -21,7 +21,13 @@ function Update () {
 	}
 	
 	else {
-		attack();
+		var attackTower:towerScript;
+		for (float i = 0; i<collection.length(); i++) {
+			if (collection[i].health < attackTower.health) {
+				attackTower = collection[i];
+			}
+		}
+		attack(attackTower);
 	}
 
 }
@@ -41,7 +47,7 @@ function attack ( /* Tower */ ) {
 //~~~inflicts damage to a tower~~~
 	
 	//inflicts "damage" amount of damage to a tower's health
-	GetComponent(Tower).tower.health -= damage;
+	tower.health -= damage;
 
 }
 
