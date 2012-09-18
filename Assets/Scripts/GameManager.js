@@ -42,7 +42,7 @@ function Update () {
 	
 }
 
-function makeTower(Vector3 ) {
+function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 	tower.transform.position = pos;
 }
