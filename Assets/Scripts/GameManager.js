@@ -1,11 +1,5 @@
 #pragma strict
 
-public static var board : Block[,];
-public static var height : float;
-public static var width : float;
-public static var mainCamera : Camera;
-
-
 import System.Collections.Generic;
 
 public static var blockList : List.<GameObject>;
@@ -19,15 +13,7 @@ var lastMoved : float; // when we last moved
 public var block : Block; // for Instantiate()
 
 function Start () {
-<<<<<<< HEAD
     blockList = new List.<GameObject>();
-=======
-
-    var b : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-    b.AddComponent(Block);
-    b.transform.position = Vector3(0, 0, 0);
-
->>>>>>> cf30c2c974a4aca825224912f30798968172e605
     MakeBlock(new Vector3(0, 0, 0));
     MakeBlock(new Vector3(0, 2, 0));
 
