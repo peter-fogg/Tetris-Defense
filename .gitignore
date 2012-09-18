@@ -1,7 +1,10 @@
 # Keep Library outta there.
 Library/
 Temp/
-*.pidb
+
 
 # other stuff
 .DS_Store
+*.pidb
+
+Assembly-UnityScript.pidb
