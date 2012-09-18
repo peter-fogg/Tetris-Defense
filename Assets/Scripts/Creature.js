@@ -1,5 +1,7 @@
 /*#pragma strict
 
+#pragma strict
+/*
 
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 //Devon Wells 
@@ -52,3 +54,10 @@ function move ( towers  ) {
 function attack ( Tower ) {
 //~~~inflicts damage to a tower~~~
 */
+// function attack ( /* Tower */ //) {
+// //~~~inflicts damage to a tower~~~
+	
+// 	//inflicts "damage" amount of damage to a tower's health
+// 	tower.health -= damage;
+
+// }
