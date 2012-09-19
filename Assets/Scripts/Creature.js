@@ -4,8 +4,6 @@
 /*
 
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
-//Devon Wells 
-//CS 361
 
 var	health			:float; //keeps track of how much health the creature has
 var inRange			:boolean; //whether or not the creature is in range of a tower
