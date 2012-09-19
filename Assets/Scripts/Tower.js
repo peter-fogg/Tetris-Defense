@@ -1,25 +1,27 @@
 #pragma strict
 //SCRIPT THAT HANDLES TOWER BEHAVIOR
 
-var health				:float; //keeps track of how much health the tower has
-var damage				:float;	//keeps track of how much damage the tower deals
-//var prefabBullet	:Transform; //stores the bullet that the tower fires
-var range			:float;	//keeps track of the the range of the turret
-var bfire			:float;
+var health : float; //keeps track of how much health the tower has
+var damage : float;	//keeps track of how much damage the tower deals
+var range : float;	//keeps track of the the range of the turret
 //var cenemy  // best creature enemy
-var benemy 			:Block;   // best block
-var base			:Block; //keeps track of the block that the tower is placed on
+var benemy : Block;   // best block
+var base : Block; //keeps track of the block that the tower is placed on
+var lastFired : float;
+var fireRate : float;
 
 function Start () {
-	health = 10;
-	damage = 1;
-	range = 5; // decide what range of tower is
-	bfire = 1; // decide what firing freq is
+    health = 10;
+    damage = 1;
+    range = 20; // decide what range of tower is
+    fireRate = .2; // decide what firing freq is
+    lastFired = 0;
 }
 
 function Update () {
 	//if the tower's health is depleted, destroy the tower
-	if (health == 0) {
+    // also if our block is gone
+	if (health == 0 || base == null) {
 		Destroy(gameObject);
 	}
 	//otherwise, pick attack
@@ -30,7 +32,10 @@ function Update () {
 //	if(cenemy != null)
 //		attack(cenemy);
 //	else
-		attack(benemy);	
+    if(benemy != null) {
+	print("ENEMY! "+ benemy.transform.position + " meh: " + base.transform.position);
+	attack(benemy);
+    }
 }
 
 /*function cattack() { // looks for creature to attack that is within range
@@ -43,25 +48,39 @@ function Update () {
 }*/
 
 function battack() { // looks for a block to attack
-	// check for blocks in range
-	var min : float = 10;
 	for(var enemy: GameObject in GameManager.blockList) {
-		if(Vector3.Distance(enemy.transform.position, transform.position) < range)
-			if(enemy.GetComponent(Block).isOccupied == false)
-				return enemy.GetComponent(Block);
+	    if(enemy != base.gameObject &&
+	       enemy.GetComponent(Block).isOccupied == false &&
+	       Vector3.Distance(enemy.transform.position, transform.position) < range) {
+		return enemy.GetComponent(Block);
+	    }
 	}
-	return base;
+	return null;
 }
 
-function attack(target: Block){ // attack a given target
-
-	// instantiate a bullet heading in the direction of given target
-	var bullet : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
-	Destroy(bullet);	
-}
+function attack(target : Block){ // attack a given target
+    if(Time.time > lastFired + fireRate) {
+	var bullet : GameObject = MakeBullet();
+//	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
+	var targetDirection = target.transform.position - transform.position;
+	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
+	lastFired = Time.time;
+    }
+ }
 
 function OnMouseDown() {
-	if(base.group.isMoving === false)
-		base.group.Rotate();
+    if(base.group.isMoving === false)
+	base.group.Rotate();
+}
+
+function MakeBullet() {
+    var bullet : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+    bullet.AddComponent(Bullet);
+    bullet.AddComponent(Rigidbody);
+    bullet.GetComponent(Rigidbody).useGravity = false;
+    bullet.collider.isTrigger = true;
+    bullet.transform.position = transform.position;
+    bullet.transform.position.z = 0;
+    bullet.GetComponent(Bullet).ourBlock = base.gameObject;
+    return bullet;
 }

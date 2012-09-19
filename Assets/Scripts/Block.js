@@ -33,6 +33,6 @@ function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 	tower.transform.position = pos;
 	tower.AddComponent(Tower);
-	tower.transform.parent = transform;
 	tower.GetComponent(Tower).base = this;
+	tower.transform.parent = transform;
 }
