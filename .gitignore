@@ -6,5 +6,5 @@ Temp/
 # other stuff
 .DS_Store
 *.pidb
-
+*.swp # Vim swap files
 Assembly-UnityScript.pidb
