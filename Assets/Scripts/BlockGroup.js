@@ -14,8 +14,10 @@ var lastMoved : float;
 var isMoving : boolean;
 
 function Start () {
-    var screenWidth : float = Camera.main.ScreenToWorldPoint(Vector3(Camera.main.pixelWidth, 0, 0)).x -
-	Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).x;
+    var screenHeight : float = Camera.main.orthographicSize*2;
+//    var screenWidth : float = Camera.main.ScreenToWorldPoint(Vector3(Camera.main.pixelWidth, 0, 0)).x -
+//	Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).x;
+    var screenWidth : float = screenHeight*Camera.main.aspect;
     var x : int = Mathf.FloorToInt(Random.Range(-screenWidth/2, screenWidth/2));
     transform.position = Vector3(x, GameManager.topRow, 0);
     isMoving = true;

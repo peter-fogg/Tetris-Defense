@@ -16,8 +16,10 @@ public var blockGroup : BlockGroup; // for Instantiate()
 
 function Start () {
     blockList = new List.<GameObject>();
-    timestep = 0.5;
-    spawnStep = 5;
+//    timestep = 0.1;
+//    spawnStep = 5;
+    timestep = .05;
+    spawnStep = .5;
     lastSpawned = Time.time; // spawn a block right away
     gameOver = false;
     // figure out what bottomRow should be
