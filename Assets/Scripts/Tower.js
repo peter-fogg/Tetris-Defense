@@ -13,7 +13,7 @@ var fireRate : float;
 function Start () {
     health = 10;
     damage = 1;
-    range = 20; // decide what range of tower is
+    range = 10; // decide what range of tower is
     fireRate = .2; // decide what firing freq is
     lastFired = 0;
 }
@@ -33,7 +33,6 @@ function Update () {
 //		attack(cenemy);
 //	else
     if(benemy != null) {
-	print("ENEMY! "+ benemy.transform.position + " meh: " + base.transform.position);
 	attack(benemy);
     }
 }
@@ -62,8 +61,10 @@ function attack(target : Block){ // attack a given target
     if(Time.time > lastFired + fireRate) {
 	var bullet : GameObject = MakeBullet();
 //	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
-	var targetDirection = target.transform.position - transform.position;
-	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
+//	var targetDirection = target.transform.position - transform.position;
+//	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
+	print(target.transform.position);
+	bullet.transform.LookAt(target.transform.position);
 	lastFired = Time.time;
     }
  }
@@ -81,6 +82,8 @@ function MakeBullet() {
     bullet.collider.isTrigger = true;
     bullet.transform.position = transform.position;
     bullet.transform.position.z = 0;
+    bullet.GetComponent(Bullet).origin = base.transform.position;
     bullet.GetComponent(Bullet).ourBlock = base.gameObject;
+    bullet.GetComponent(Bullet).range = range;
     return bullet;
 }

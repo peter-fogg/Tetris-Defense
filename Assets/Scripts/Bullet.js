@@ -1,20 +1,18 @@
 #pragma strict
 
 var speed : float;
-var lifespan : float;
-var began : float; // when was this bullet created?
-var ourBlock : GameObject; // should take this out later, maybe?
+var range : float;
+var ourBlock : GameObject; // maybe take this out later?
+var origin : Vector3; // where we started from
 
 function Start () {
     speed = 5;
-    lifespan = 10;
-    began = Time.time;
     transform.localScale = Vector3(.1, .1, .1);
 }
 
 function Update () {
     transform.Translate(Vector3.up * Time.deltaTime * speed);
-    if(lifespan < Time.time - began) {
+    if(Vector3.Distance(origin, transform.position) > range) {
 	Destroy(gameObject);
     }
 }
