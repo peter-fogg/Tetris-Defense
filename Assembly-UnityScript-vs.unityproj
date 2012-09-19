@@ -19,6 +19,7 @@
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
 	<DefineConstants>DEBUG;TRACE;UNITY_3_5_3;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_OSX;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+>>>>>>> 313f9d9001b6aa2e058c918f15ab35294abcb63e
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,13 +40,12 @@
 	<Reference Include="UnityEngine">
 	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
-	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Block.js" />
      <Compile Include="Assets\Scripts\BlockGroup.js" />
+     <Compile Include="Assets\Scripts\Bullet.js" />
      <Compile Include="Assets\Scripts\Creature.js" />
      <Compile Include="Assets\Scripts\GameManager.js" />
      <Compile Include="Assets\Scripts\Tower.js" />
