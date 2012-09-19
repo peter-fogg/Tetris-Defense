@@ -48,7 +48,7 @@ function battack() { // looks for a block to attack
 	// check for blocks in range
 	var min : float = 10;
 	for(var enemy: GameObject in blockList) {
-		if(Vector3.Distance(enemy.transform.position, transform.position))
+		if(Vector3.Distance(enemy.transform.position, transform.position) < range)
 			if(enemy.GetComponent(Block).isOccupied == false)
 				return enemy;
 	}
