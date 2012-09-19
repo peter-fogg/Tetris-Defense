@@ -25,10 +25,10 @@ function Start () {
     case 0:
 	blockType = BlockType.L_BLOCK;
 	blocks = new GameObject[4];
-	blocks[0] = MakeBlock(Vector3(0, 0, 0));
-	blocks[1] = MakeBlock(Vector3(0, -1, 0));
-	blocks[2] = MakeBlock(Vector3(0, -2, 0));
-	blocks[3] = MakeBlock(Vector3(1, -2, 0));
+	blocks[0] = MakeBlock(Vector3(0, 1, 0));
+	blocks[1] = MakeBlock(Vector3(0, 0, 0));
+	blocks[2] = MakeBlock(Vector3(0, -1, 0));
+	blocks[3] = MakeBlock(Vector3(1, -1, 0));
 	break;
     case 1:
 	blockType = BlockType.T_BLOCK;
