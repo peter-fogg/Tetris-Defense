@@ -51,6 +51,11 @@ function Update () {
 
 function battack() { // looks for a block to attack
 	// check for blocks in range
+	for(int i = 0; i < blockList.length; i++) {
+		if()
+			enemies.add(blockList.get	
+
+	}
 	// weigh blcoks such that, worst to best
 	//   -- aren't your block
 	//   -- don't have a tower on them

@@ -25,10 +25,10 @@ function Start () {
     case 0:
 	blockType = BlockType.L_BLOCK;
 	blocks = new GameObject[4];
-	blocks[0] = MakeBlock(Vector3(0, 0, 0));
-	blocks[1] = MakeBlock(Vector3(0, -1, 0));
-	blocks[2] = MakeBlock(Vector3(0, -2, 0));
-	blocks[3] = MakeBlock(Vector3(1, -2, 0));
+	blocks[0] = MakeBlock(Vector3(0, 1, 0));
+	blocks[1] = MakeBlock(Vector3(0, 0, 0));
+	blocks[2] = MakeBlock(Vector3(0, -1, 0));
+	blocks[3] = MakeBlock(Vector3(1, -1, 0));
 	break;
     case 1:
 	blockType = BlockType.T_BLOCK;
@@ -57,7 +57,7 @@ function Start () {
 }
 
 function Update () {
-    GetLowestBlock();
+    lowestBlock = GetLowestBlock();
     CheckPosition();
     if(isMoving && Time.time > lastMoved + GameManager.timestep) {
 	transform.position.y -= 1;
@@ -73,8 +73,17 @@ function GetLowestBlock() {
 	    lowest = b;
 	}
     }
-    lowestBlock = lowest;
     return lowest;
+}
+
+function GetHighestBlock() {
+    var highest : GameObject = blocks[0];
+    for(var b : GameObject in blocks) {
+	if(b.transform.position.y > highest.transform.position.y) {
+	    highest = b;
+	}
+    }
+    return highest;
 }
 
 function MakeBlock(pos : Vector3) {
@@ -100,9 +109,12 @@ function CheckPosition() {
 	for(var otherBlock : GameObject in GameManager.blockList) {
 	    if(!ArrayUtility.Contains.<GameObject>(blocks, otherBlock) &&
 	       otherBlock.GetComponent(Block).group.isMoving == false &&
-	       otherBlock.transform.position.x == thisBlock.transform.position.x &&
+	       Mathf.Approximately(otherBlock.transform.position.x, thisBlock.transform.position.x) &&
 	       Mathf.Abs(otherBlock.transform.position.y - thisBlock.transform.position.y) <= 1) {
 		isMoving = false;
+		if(GetHighestBlock().transform.position.y >= GameManager.topRow) {
+		    GameManager.gameOver = true;
+		}
 		return;
 	    }
 	}
