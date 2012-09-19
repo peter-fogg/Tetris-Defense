@@ -7,8 +7,8 @@ var damage				:float;	//keeps track of how much damage the tower deals
 var range			:float;	//keeps track of the the range of the turret
 var bfire			:float;
 //var cenemy  // best creature enemy
-var benemy : Vector3;   // best block
-var base: 			Block; //keeps track of the block that the tower is placed on
+var benemy 			:Block;   // best block
+var base			:Block; //keeps track of the block that the tower is placed on
 
 function Start () {
 	health = 10;
@@ -49,17 +49,17 @@ function battack() { // looks for a block to attack
 	var min : float = 10;
 	for(var enemy: GameObject in blockList) {
 		if(Vector3.Distance(enemy.transform.position, transform.position))
-			if(enemy.isOccupied == false)
-				return enemy.position; 
+			if(enemy.GetComponent(Block).isOccupied == false)
+				return enemy;
 	}
-	return transform.position;
+	return base;
 }
 
-function attack(target: GameObject){ // attack a given target
+function attack(target: Block){ // attack a given target
 
 	// instantiate a bullet heading in the direction of given target
 	var bullet : GameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-	bullet.transform.position = Vector3.Lerp(transform.position, target, Time.time);
+	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
 	Destroy(bullet);	
 }
 
