@@ -47,10 +47,10 @@ function battack() { // looks for a block to attack
 	var blockList: List.<GameObject> = manager.GetComponent(GameManager).blockList;
 	// check for blocks in range
 	var min : float = 10;
-	for(var i = 0; i < blockList.length; i++) {
-		if(Vector3.Distance(blockList.get(i).position, transform.position))
-			if(blockList.get(i).isOccupied == false)
-				return blockList.get(i).position; 
+	for(var enemy: GameObject in blockList) {
+		if(Vector3.Distance(enemy.transform.position, transform.position))
+			if(enemy.isOccupied == false)
+				return enemy.position; 
 	}
 	return transform.position;
 }
