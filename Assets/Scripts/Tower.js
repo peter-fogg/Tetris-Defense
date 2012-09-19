@@ -4,7 +4,7 @@
 var health			:float; //keeps track of how much health the tower has
 var damage			:float;	//keeps track of how much damage the tower deals
 //var prefabBullet	:Transform; //stores the bullet that the tower fires
-//var range			:float;	//keeps track of the the range of the turret
+var range			:float;	//keeps track of the the range of the turret
 var bfire			:float;
 //var cenemy  // best creature enemy
 //var benemy   // best block
