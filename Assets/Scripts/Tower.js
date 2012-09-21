@@ -21,7 +21,7 @@ function Start () {
 function Update () {
 	//if the tower's health is depleted, destroy the tower
     // also if our block is gone
-	if (health == 0 || base == null) {
+	if (health <= 0 || base == null) {
 		Destroy(gameObject);
 	}
 	//otherwise, pick attack

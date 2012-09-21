@@ -4,52 +4,65 @@ import System.Collections.Generic;
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 
 var health : float; //keeps track of how much health the creature has
-var inRange : boolean; //whether or not the creature is next to a tower
 var damage : float; //keeps track of how much damage the creature deals
 var location : Block; // Where are we right now?
+var path : Stack.<Block>;
+var lastMoved : float;
+var moveRate : float;
 
 function Start () {
     health = 5;
     damage = 1;
+    lastMoved = Time.time;
+    moveRate = 1;
 }
 
 function Update () {
     //~~~Checks to see if there are towers and then moves towards the closest
     //~~~If the creature is in range of the tower, attacks
 
-    if ( !inRange ) {
-	move();
-    }
+//    if ( !inRange ) {
+//	move();
+//    }
     
-    else {
-	var attackTower: Tower;
+//    else {
+//	var attackTower: Tower;
 	// for (var i: float = 0; i < collection.length(); i++) {
 	//     if (collection[i].health < attackTower.health) {
 	// 	attackTower = collection[i];
 	//     }
 	// }
-	attack(attackTower);
+//	attack(attackTower);
+//    }
+    if(path == null) { // figure out what we're doing with our life
+	path = Search();
     }
-
+    else if(path.Count == 1) { // there's only one block left; it's our target
+	attack(path.Peek().tower);
+    }
+    else { // not in range, get going!
+	move();
+    }
 }
 
 function move() {
-
-
-    //~~~finds the shortest Path to the nearest tower~~~ 
-    //check to make sure not next to tower
-    //figure out which tower is closest
-    //find shortest path
-    //figure out which direction to translate
-    //translate
-
+    if(Time.time > lastMoved + moveRate) {
+	var target : Block = path.Pop();
+	transform.position = Vector3(target.transform.position.x,
+				     target.transform.position.y,
+				     transform.position.z);
+	lastMoved = Time.time;
+    }
 }
 
 function attack(tower: Tower) {
-    //~~~inflicts damage to a tower~~~
-    
+    if(tower == null) { // that tower is destroyed!
+	path = null; // reset our attack path
+    }
     //inflicts "damage" amount of damage to a tower's health
-    tower.health -= damage;
+    else {
+	tower.health -= damage;
+    }
 }
 
 /*
