@@ -54,6 +54,7 @@ function makeTower(pos : Vector3) {
 }
 
 function OnDestroy() {
+	GameObject.Find("Score").GetComponent(Score).score++;
 	if(isOccupied === true) {
 		GameObject.Find("GameManager").GetComponent(GameManager).numTowers--;
 	    GameManager.towerList.Remove(tower.gameObject);

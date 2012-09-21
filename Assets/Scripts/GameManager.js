@@ -54,5 +54,6 @@ function OnGUI() {
     if(gameOver) {
 	Time.timeScale = 0; // stop the game
 	GUI.Button(Rect(Camera.main.pixelWidth, Camera.main.pixelHeight, 100, 30), "You lose!");
+	Application.LoadLevel("StartScreen");
     }
 }
