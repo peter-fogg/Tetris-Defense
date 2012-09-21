@@ -2,21 +2,28 @@
 
 //var lastMoved : float;
 var health : float;
+//keeps track of the starting health
+var maxHealth : float;
 //var isMoving : boolean; // solidified or not
 var tower : Tower; // might not be necessary?
 var isOccupied : boolean;
 // this might get fucked up if we've got more than on creature setting this variable...
 var cameFrom : Block; // Where was this block reached from? (for pathfinding)
 var group : BlockGroup; // our parent
+//color to lerp between
+var lerpedColor : Color = Color.white;
 
 // Create the cube and any other bits.
 function Start () {
     isOccupied = false;
-    health = 10;
+    health = maxHealth = 10;
 }
 
+
 function Update () {
-    
+    //Damage/color change handling:
+    lerpedColor = Color.Lerp(Color.red, Color.white,health/maxHealth);
+    renderer.material.color = lerpedColor;	
 }
 
 function OnMouseOver () {
