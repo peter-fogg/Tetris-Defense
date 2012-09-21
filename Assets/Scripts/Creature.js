@@ -1,12 +1,9 @@
-/*#pragma strict
-
 #pragma strict
-/*
 
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 
 var	health			:float; //keeps track of how much health the creature has
-var inRange			:boolean; //whether or not the creature is in range of a tower
+var inRange			:boolean; //whether or not the creature is next to a tower
 var damage			:float; //keeps track of how much damage the creature deals
 
 function Start () {
@@ -19,11 +16,7 @@ function Update () {
 //~~~If the creature is in range of the tower, attacks
 
 	if ( !inrange ) {
-		move( towers );
-
-	if ( !inRange ) {
-		move(  towers  );
-
+		move();
 	}
 	
 	else {
@@ -38,9 +31,10 @@ function Update () {
 
 }
 
-function move ( towers  ) {
-//~~~finds the shortest Path to the nearest tower~~~
+function move() {
 
+
+//~~~finds the shortest Path to the nearest tower~~~ 
 //check to make sure not next to tower
 //figure out which tower is closest
 //find shortest path
@@ -51,11 +45,7 @@ function move ( towers  ) {
 
 function attack ( Tower ) {
 //~~~inflicts damage to a tower~~~
-*/
-// function attack ( /* Tower */ //) {
-// //~~~inflicts damage to a tower~~~
 	
-// 	//inflicts "damage" amount of damage to a tower's health
-// 	tower.health -= damage;
-
-// }
+ 	//inflicts "damage" amount of damage to a tower's health
+ 	tower.health -= damage;
+}
