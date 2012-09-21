@@ -49,14 +49,19 @@ function Update () {
 }*/
 
 function battack() { // looks for a block to attack
+    var result : Block;
 	for(var enemy: GameObject in GameManager.blockList) {
 	    if(enemy != base.gameObject &&
 	       enemy.GetComponent(Block).isOccupied == false &&
 	       Vector3.Distance(enemy.transform.position, transform.position) < range) {
-		return enemy.GetComponent(Block);
+		if(result == null ||
+		   Vector3.Distance(enemy.transform.position, transform.position) <
+		   Vector3.Distance(result.transform.position, transform.position)) {
+		    result = enemy.GetComponent(Block);
+		}
 	    }
 	}
-	return null;
+	return result;
 }
 
 function attack(target : Block){ // attack a given target
