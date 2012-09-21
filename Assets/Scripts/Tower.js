@@ -44,33 +44,32 @@ function Update () {
 	// search the list of creatures
 	// compare to range
 	// if a creature is within range, return command to attack it
-	
+
 	// return null if no creatures
 }*/
 
 function battack() { // looks for a block to attack
     var result : Block;
-	for(var enemy: GameObject in GameManager.blockList) {
-	    if(enemy != base.gameObject &&
-	       enemy.GetComponent(Block).isOccupied == false &&
-	       Vector3.Distance(enemy.transform.position, transform.position) < range) {
-		if(result == null ||
-		   Vector3.Distance(enemy.transform.position, transform.position) <
-		   Vector3.Distance(result.transform.position, transform.position)) {
-		    result = enemy.GetComponent(Block);
-		}
+    for(var enemy: GameObject in GameManager.blockList) {
+	if(enemy != base.gameObject &&
+//	   enemy.GetComponent(Block).isOccupied == false &&
+	   Vector3.Distance(enemy.transform.position, transform.position) < range) {
+	    if(result == null ||
+	       Vector3.Distance(enemy.transform.position, transform.position) <
+	       Vector3.Distance(result.transform.position, transform.position)) {
+		result = enemy.GetComponent(Block);
 	    }
 	}
-	return result;
+    }
+    if(result == null) { // if there aren't any good towers, just attack ourselves
+	attack(base);
+    }
+    return result;
 }
 
 function attack(target : Block){ // attack a given target
     if(Time.time > lastFired + fireRate) {
 	var bullet : GameObject = MakeBullet();
-	// bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, 0);
-	// var targetDirection = target.transform.position - transform.position;
-	// bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
-	print("target "+target.transform.position);
 	bullet.transform.LookAt(target.transform);
 	lastFired = Time.time;
     }
