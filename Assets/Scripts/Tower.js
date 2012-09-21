@@ -2,7 +2,7 @@
 //SCRIPT THAT HANDLES TOWER BEHAVIOR
 
 var health : float; //keeps track of how much health the tower has
-var damage : float;	//keeps track of how much damage the tower deals
+//var damage : float;	//keeps track of how much damage the tower deals
 var range : float;	//keeps track of the the range of the turret
 //var cenemy  // best creature enemy
 var benemy : Block;   // best block
@@ -12,7 +12,7 @@ var fireRate : float;
 
 function Start () {
     health = 10;
-    damage = 1;
+//    damage = 1;
     range = 10; // decide what range of tower is
     fireRate = .2; // decide what firing freq is
     lastFired = 0;
@@ -27,12 +27,15 @@ function Update () {
 	//otherwise, pick attack
 	
 //	cenemy = cattack(); // checks if there is a creature in range ot attack
-	benemy = battack(); // check if there are blocks in range to attack
 	
 //	if(cenemy != null)
 //		attack(cenemy);
 //	else
-    if(benemy != null) {
+    if(benemy == null) {
+	benemy = battack(); // check if there are blocks in range to attack
+	print("block at " + benemy.transform.position);
+    }
+    else {
 	attack(benemy);
     }
 }
@@ -60,11 +63,11 @@ function battack() { // looks for a block to attack
 function attack(target : Block){ // attack a given target
     if(Time.time > lastFired + fireRate) {
 	var bullet : GameObject = MakeBullet();
-//	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
-//	var targetDirection = target.transform.position - transform.position;
-//	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
-	print(target.transform.position);
-	bullet.transform.LookAt(target.transform.position);
+	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
+	var targetDirection = target.transform.position - transform.position;
+	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
+	print("target "+target.transform.position);
+//	bullet.transform.LookAt(target.transform.position);
 	lastFired = Time.time;
     }
  }

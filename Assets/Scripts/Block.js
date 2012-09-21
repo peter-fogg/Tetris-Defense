@@ -10,6 +10,7 @@ var group : BlockGroup; // our parent
 // Create the cube and any other bits.
 function Start () {
     isOccupied = false;
+    health = 10;
 }
 
 function Update () {
