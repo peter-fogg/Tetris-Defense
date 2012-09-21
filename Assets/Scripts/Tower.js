@@ -33,7 +33,6 @@ function Update () {
 //	else
     if(benemy == null) {
 	benemy = battack(); // check if there are blocks in range to attack
-	print("block at " + benemy.transform.position);
     }
     else {
 	attack(benemy);
@@ -63,11 +62,11 @@ function battack() { // looks for a block to attack
 function attack(target : Block){ // attack a given target
     if(Time.time > lastFired + fireRate) {
 	var bullet : GameObject = MakeBullet();
-	bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.time);
-	var targetDirection = target.transform.position - transform.position;
-	bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
+	// bullet.transform.position = Vector3.Lerp(transform.position, target.transform.position, 0);
+	// var targetDirection = target.transform.position - transform.position;
+	// bullet.transform.Rotate(Vector3(0, 0, Vector3.Angle(targetDirection, transform.forward)));
 	print("target "+target.transform.position);
-//	bullet.transform.LookAt(target.transform.position);
+	bullet.transform.LookAt(target.transform);
 	lastFired = Time.time;
     }
  }

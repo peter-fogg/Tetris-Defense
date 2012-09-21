@@ -13,7 +13,7 @@ function Start () {
 }
 
 function Update () {
-    transform.Translate(Vector3.up * Time.deltaTime * speed);
+    transform.Translate(Vector3.forward * Time.deltaTime * speed);
     if(Vector3.Distance(origin, transform.position) > range) {
 	Destroy(gameObject);
     }
