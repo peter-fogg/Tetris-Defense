@@ -15,13 +15,13 @@ function Update () {
 //~~~Checks to see if there are towers and then moves towards the closest
 //~~~If the creature is in range of the tower, attacks
 
-	if ( !inrange ) {
+	if ( !inRange ) {
 		move();
 	}
 	
 	else {
-		var attackTower:towerScript;
-		for (float i = 0; i<collection.length(); i++) {
+		var attackTower: Tower;
+		for (var i: float = 0; i < collection.length(); i++) {
 			if (collection[i].health < attackTower.health) {
 				attackTower = collection[i];
 			}
@@ -43,7 +43,7 @@ function move() {
 
 }
 
-function attack ( Tower ) {
+function attack(tower: Tower) {
 //~~~inflicts damage to a tower~~~
 	
  	//inflicts "damage" amount of damage to a tower's health
