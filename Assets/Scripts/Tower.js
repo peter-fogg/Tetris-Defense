@@ -51,11 +51,13 @@ function Update () {
 function battack() { // looks for a block to attack
     var result : Block;
     for(var enemy: GameObject in GameManager.blockList) {
+	var enemyPos : Vector3 = enemy.transform.position;
 	if(enemy != base.gameObject &&
 //	   enemy.GetComponent(Block).isOccupied == false &&
-	   Vector3.Distance(enemy.transform.position, transform.position) < range) {
+	   enemyPos.y > transform.position.y &&
+	   Vector3.Distance(enemyPos, transform.position) < range) {
 	    if(result == null ||
-	       Vector3.Distance(enemy.transform.position, transform.position) <
+	       Vector3.Distance(enemyPos, transform.position) <
 	       Vector3.Distance(result.transform.position, transform.position)) {
 		result = enemy.GetComponent(Block);
 	    }

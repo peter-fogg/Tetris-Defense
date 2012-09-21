@@ -36,7 +36,7 @@ function Update () {
 	    MakeBlockGroup();
 	    lastSpawned = Time.time;
 	}
-	Debug.Log(numTowers);
+    spawnStep = Time.time*.005 + 3;
 }
 
 function MakeBlockGroup () {
