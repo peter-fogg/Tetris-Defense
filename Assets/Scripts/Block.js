@@ -21,7 +21,7 @@ function OnMouseOver () {
     if(Input.GetMouseButtonDown(0)) {
 	group.Rotate();
     }
-    if(Input.GetMouseButtonDown(1) && isOccupied === false) {
+    if(Input.GetMouseButtonDown(1) && isOccupied === false && GameObject.Find("GameManager").GetComponent(GameManager).numTowers < GameManager.maxTowers) {
 	var towerPos: Vector3 = transform.position;
 	Debug.Log(towerPos);
 	towerPos.z -= 1;
@@ -36,4 +36,11 @@ function makeTower(pos : Vector3) {
 	tower.AddComponent(Tower);
 	tower.GetComponent(Tower).base = this;
 	tower.transform.parent = transform;
+	GameObject.Find("GameManager").GetComponent(GameManager).numTowers++;
+}
+
+function OnDestroy() {
+	if(isOccupied === true) {
+		GameObject.Find("GameManager").GetComponent(GameManager).numTowers--;
+	}
 }

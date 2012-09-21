@@ -11,6 +11,8 @@ public static var gameOver : boolean;
 public static var timestep : float; // how often to move
 var spawnStep : float; // how often to spawn a block group
 var lastSpawned : float;
+var numTowers: float;
+public static var maxTowers: float;
 
 public var blockGroup : BlockGroup; // for Instantiate()
 
@@ -23,6 +25,8 @@ function Start () {
     // figure out what bottomRow should be
     bottomRow = Camera.main.ScreenToWorldPoint(Vector3(0, 0, 0)).y + 1;
     topRow = Camera.main.ScreenToWorldPoint(Vector3(0, Camera.main.pixelHeight, 0)).y;
+    numTowers = 0;
+    maxTowers = 10;
 }
 
 function Update () {
@@ -30,6 +34,7 @@ function Update () {
 	    MakeBlockGroup();
 	    lastSpawned = Time.time;
 	}
+	Debug.Log(numTowers);
 }
 
 function MakeBlockGroup () {
