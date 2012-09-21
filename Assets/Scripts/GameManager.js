@@ -20,8 +20,8 @@ public var blockGroup : BlockGroup; // for Instantiate()
 function Start () {
     blockList = new List.<GameObject>();
     towerList = new List.<GameObject>();
-    timestep = 0.2;
-    spawnStep = 3;
+    timestep = 0.1;
+    spawnStep = 2;
     lastSpawned = Time.time; // spawn a block right away
     gameOver = false;
     // figure out what bottomRow should be
@@ -36,7 +36,7 @@ function Update () {
 	    MakeBlockGroup();
 	    lastSpawned = Time.time;
 	}
-    spawnStep = Time.time*.005 + 3;
+    spawnStep = 3 - Time.time*.03;
 }
 
 function MakeBlockGroup () {

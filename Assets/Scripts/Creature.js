@@ -34,6 +34,9 @@ function Update () {
 	// }
 //	attack(attackTower);
 //    }
+    if(location == null) {
+	Destroy(gameObject);
+    }
     if(path == null) { // figure out what we're doing with our life
 	path = Search();
     }
@@ -90,9 +93,9 @@ function Search() {
  */
 function TraceBack(start : Block) {
     var path : Stack.<Block> = new Stack.<Block>();
-    while(start.cameFrom != location) {
+    while(start.cameFrom[gameObject] != location) {
 	path.Push(start);
-	start = start.cameFrom;
+	start = start.cameFrom[gameObject];
     }
     return path;
 }
@@ -111,7 +114,7 @@ function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFro
 	var g : GameObject = CheckPosition(p);
 	if(g != null) {
 	    worklist.Push(g);
-	    g.GetComponent(Block).cameFrom = cameFrom;
+	    g.GetComponent(Block).cameFrom[gameObject] = cameFrom;
 	}
     }
 }
