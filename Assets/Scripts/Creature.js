@@ -113,7 +113,7 @@ function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFro
     for(var p : Vector3 in neighbors) {
 	var g : GameObject = CheckPosition(p);
 	// don't explore blocks that don't exist or have already been visited
-	if(g != null && !g.cameFrom.ContainsKey(gameObject)) {
+	if(g != null && !g.GetComponent(Block).cameFrom.ContainsKey(gameObject)) {
 	    worklist.Push(g);
 	    g.GetComponent(Block).cameFrom[gameObject] = cameFrom;
 	}
