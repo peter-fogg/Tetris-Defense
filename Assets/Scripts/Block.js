@@ -25,7 +25,7 @@ function OnMouseOver () {
 	var towerPos: Vector3 = transform.position;
 	Debug.Log(towerPos);
 	towerPos.z -= 1;
-	makeTower(towerPos);
+	tower = makeTower(towerPos);
 	isOccupied = true;
     }
 }
@@ -37,10 +37,12 @@ function makeTower(pos : Vector3) {
 	tower.GetComponent(Tower).base = this;
 	tower.transform.parent = transform;
 	GameObject.Find("GameManager").GetComponent(GameManager).numTowers++;
+    GameManager.towerList.Add(tower);
 }
 
 function OnDestroy() {
 	if(isOccupied === true) {
 		GameObject.Find("GameManager").GetComponent(GameManager).numTowers--;
+	    GameManager.towerList.Remove(tower.gameObject);
 	}
 }

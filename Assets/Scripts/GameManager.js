@@ -3,6 +3,7 @@
 import System.Collections.Generic;
 
 public static var blockList : List.<GameObject>;
+public static var towerList : List.<GameObject>;
 public static var height : float;
 public static var width : float;
 public static var bottomRow : float; // the lowest we can go on the screen
@@ -18,6 +19,7 @@ public var blockGroup : BlockGroup; // for Instantiate()
 
 function Start () {
     blockList = new List.<GameObject>();
+    towerList = new List.<GameObject>();
     timestep = 0.2;
     spawnStep = 3;
     lastSpawned = Time.time; // spawn a block right away
