@@ -5,6 +5,8 @@ var health : float;
 //var isMoving : boolean; // solidified or not
 var tower : Tower; // might not be necessary?
 var isOccupied : boolean;
+// this might get fucked up if we've got more than on creature setting this variable...
+var cameFrom : Block; // Where was this block reached from? (for pathfinding)
 var group : BlockGroup; // our parent
 
 // Create the cube and any other bits.

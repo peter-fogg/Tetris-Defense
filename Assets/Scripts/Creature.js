@@ -1,51 +1,118 @@
 #pragma strict
 
+import System.Collections.Generic;
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 
-var	health			:float; //keeps track of how much health the creature has
-var inRange			:boolean; //whether or not the creature is next to a tower
-var damage			:float; //keeps track of how much damage the creature deals
+var health : float; //keeps track of how much health the creature has
+var inRange : boolean; //whether or not the creature is next to a tower
+var damage : float; //keeps track of how much damage the creature deals
+var location : Block; // Where are we right now?
 
 function Start () {
-	health = 5;
-	damage = 1;
+    health = 5;
+    damage = 1;
 }
 
 function Update () {
-//~~~Checks to see if there are towers and then moves towards the closest
-//~~~If the creature is in range of the tower, attacks
+    //~~~Checks to see if there are towers and then moves towards the closest
+    //~~~If the creature is in range of the tower, attacks
 
-	if ( !inRange ) {
-		move();
-	}
-	
-	else {
-		var attackTower: Tower;
-		for (var i: float = 0; i < collection.length(); i++) {
-			if (collection[i].health < attackTower.health) {
-				attackTower = collection[i];
-			}
-		}
-		attack(attackTower);
-	}
+    if ( !inRange ) {
+	move();
+    }
+    
+    else {
+	var attackTower: Tower;
+	// for (var i: float = 0; i < collection.length(); i++) {
+	//     if (collection[i].health < attackTower.health) {
+	// 	attackTower = collection[i];
+	//     }
+	// }
+	attack(attackTower);
+    }
 
 }
 
 function move() {
 
 
-//~~~finds the shortest Path to the nearest tower~~~ 
-//check to make sure not next to tower
-//figure out which tower is closest
-//find shortest path
-//figure out which direction to translate
-//translate
+    //~~~finds the shortest Path to the nearest tower~~~ 
+    //check to make sure not next to tower
+    //figure out which tower is closest
+    //find shortest path
+    //figure out which direction to translate
+    //translate
 
 }
 
 function attack(tower: Tower) {
-//~~~inflicts damage to a tower~~~
-	
- 	//inflicts "damage" amount of damage to a tower's health
- 	tower.health -= damage;
+    //~~~inflicts damage to a tower~~~
+    
+    //inflicts "damage" amount of damage to a tower's health
+    tower.health -= damage;
+}
+
+/*
+ * Does a breadth-first search through blocks to find a tower. If a valid
+ * path is found, it is returned; otherwise returns null.
+ */
+function Search() {
+    var worklist : Stack.<GameObject> = new Stack.<GameObject>();
+    var currentPosition : Vector3; // which block we're exploring right now
+    AddNeighbors(transform.position, worklist, location);
+    while(worklist.Count != 0) {
+	var go : GameObject = worklist.Pop();
+	var block : Block = go.GetComponent(Block);
+	if(block.isOccupied) {
+	    return TraceBack(block);
+	}
+	AddNeighbors(block.transform.position, worklist, block);
+    }
+    return null;
+}
+
+/*
+ * Follows the cameFrom links in each Block to find the path from here (the base) to
+ * there (the tower).
+ */
+function TraceBack(start : Block) {
+    var path : Stack.<Block> = new Stack.<Block>();
+    while(start.cameFrom != location) {
+	path.Push(start);
+	start = start.cameFrom;
+    }
+    return path;
+}
+
+/*
+ * Adds neighbors of a given position onto the worklist stack, if they exist. Also
+ * sets the cameFrom variable of each block.
+ */
+function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFrom : Block) {
+    var neighbors : Vector3[] = new Vector3[4];
+    neighbors[0] = new Vector3(position.x+1, position.y, position.z);
+    neighbors[1] = new Vector3(position.x-1, position.y, position.z);
+    neighbors[2] = new Vector3(position.x, position.y-1, position.z);
+    neighbors[3] = new Vector3(position.x, position.y+1, position.z);
+    for(var p : Vector3 in neighbors) {
+	var g : GameObject = CheckPosition(p);
+	if(g != null) {
+	    worklist.Push(g);
+	    g.GetComponent(Block).cameFrom = cameFrom;
+	}
+    }
+}
+
+/*
+ * Lets us know if a given position has a block on it or not. Returns
+ * said block if it does; otherwise returns null.
+ */
+function CheckPosition(position : Vector3) {
+    var objects : Collider[] = Physics.OverlapSphere(position, .1);
+    for(var c : Collider in objects) {
+	if(c.gameObject.GetComponent(Block) != null) {
+	    return c.gameObject;
+	}
+    }
+    return null;
 }
