@@ -38,6 +38,7 @@ function makeTower(pos : Vector3) {
 	tower.transform.parent = transform;
 	GameObject.Find("GameManager").GetComponent(GameManager).numTowers++;
     GameManager.towerList.Add(tower);
+    return tower.GetComponent(Tower);
 }
 
 function OnDestroy() {
