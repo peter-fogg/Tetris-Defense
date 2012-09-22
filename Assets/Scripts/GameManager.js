@@ -66,6 +66,10 @@ function makeTower(pos : Vector3) {
 function makeCreature() {
 	var rand: float = Random.Range(0, blockList.Count);
 	var spawnBlock: GameObject = blockList[rand];
+	while(spawnBlock.GetComponent(Block).group.isMoving === true) {
+		rand = Random.Range(0, blockList.Count);
+		spawnBlock = blockList[rand];
+	}
 	var creaturePos = spawnBlock.transform.position;
 	creaturePos.z -= 1;
 	var creature: GameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
