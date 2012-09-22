@@ -42,6 +42,8 @@ function Update () {
 	if(Time.time - spawnTime > creatureTime) {
 		makeCreature();
 		spawnTime = Time.time;
+		if(creatureTime > 5)
+			creatureTime -= 0.5;
 	}
 
 	if(Time.time > lastSpawned + spawnStep) {
