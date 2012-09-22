@@ -39,7 +39,6 @@ function Start () {
 
 function Update () {
 	if(Time.time - spawnTime > creatureTime) {
-		Debug.Log("Creature should spawn now.");
 		makeCreature();
 		spawnTime = Time.time;
 	}

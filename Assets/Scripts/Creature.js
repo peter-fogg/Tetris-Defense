@@ -35,6 +35,7 @@ function Update () {
 //	attack(attackTower);
 //    }
     if(location == null) { // our block got destroyed
+	GameObject.Find("GameManager").GetComponent(GameManager).numCreatures--;
 	Destroy(gameObject);
     }
     else if(!location.group.isMoving) { // this block is solidified
@@ -83,10 +84,12 @@ function Search() {
 	var go : GameObject = worklist.Pop();
 	var block : Block = go.GetComponent(Block);
 	if(block.isOccupied) {
+		Debug.Log("Path found!");
 	    return TraceBack(block);
 	}
 	AddNeighbors(block.transform.position, worklist, block);
     }
+    Debug.Log("No path found.");
     return null;
 }
 
