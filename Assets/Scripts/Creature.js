@@ -3,6 +3,16 @@
 import System.Collections.Generic;
 //SCRIPT THAT CONTROLS CREATURE BEHAVIOR
 
+/*
+ * Which direction is the tower we're attacking? Used in attack()
+ */
+enum TowerPosition {
+    TOWER_LEFT,
+    TOWER_RIGHT,
+    TOWER_UP,
+    TOWER_DOWN
+}
+
 var health : float; //keeps track of how much health the creature has
 var damage : float; //keeps track of how much damage the creature deals
 var location : Block; // Where are we right now?
@@ -56,6 +66,9 @@ function Update () {
 	if(attackBlock == null) {
 	    path = null;
 	}
+	else if(attackBlock.tower == null) {
+	    path = null;
+	}
 	else {
 	    attack(attackBlock.tower);
 	}
@@ -86,17 +99,87 @@ function move() {
 }
 
 function attack(tower: Tower) {
-    if(tower == null) { // that tower is destroyed!
-	path = null; // reset our attack path
-    }
     //inflicts "damage" amount of damage to a tower's health
-    else {
-//	if(Mathf.Approximately(Vector3.Distance(tower.transform.position, transform.position))
+    if(CheckTowerPosition(tower)) {
 	if(Time.time > lastFired + fireRate) {
 	    tower.health -= damage;
 	    lastFired = Time.time;
 	}
     }
+    else {
+	MoveDirection(GetTowerDirection(tower));
+    }
+}
+
+function MoveDirection(direction : TowerPosition) {
+    switch(direction) {
+    case TowerPosition.TOWER_UP:
+	if(CheckPosition(Vector3(transform.position.x,
+				 transform.position.y + 1,
+				 transform.position.z))) {
+	    transform.position.y += 1;
+	}
+	else {
+	    path = null;
+	}
+	break;
+    case TowerPosition.TOWER_DOWN:
+	if(CheckPosition(Vector3(transform.position.x,
+				 transform.position.y - 1,
+				 transform.position.z))) {
+	    transform.position.y -= 1;
+	}
+	else {
+	    path = null;
+	}
+	break;
+    case TowerPosition.TOWER_RIGHT:
+	if(CheckPosition(Vector3(transform.position.x + 1,
+				 transform.position.y,
+				 transform.position.z))) {
+	    transform.position.x += 1;
+	}
+	else {
+	    path = null;
+	}
+	break;
+    case TowerPosition.TOWER_LEFT:
+	if(CheckPosition(Vector3(transform.position.x - 1,
+				 transform.position.y,
+				 transform.position.z))) {
+	    transform.position.x -= 1;
+	}
+	else {
+	    path = null;
+	}
+	break;
+    }
+}
+
+/*
+ * Returns which direction a tower is, if it isn't next to us.
+ */
+function GetTowerDirection(tower : Tower) {
+    var towerPos : Vector3 = tower.transform.position;
+    if(towerPos.x < transform.position.x) {
+	return TowerPosition.TOWER_LEFT;
+    }
+    else if(towerPos.y < transform.position.y) {
+	return TowerPosition.TOWER_DOWN;
+    }
+    else if(towerPos.x > transform.position.x) {
+	return TowerPosition.TOWER_RIGHT;
+    }
+    else {
+	return TowerPosition.TOWER_UP;
+    }
+}
+
+/*
+ * Check if a tower is only one block away from us.
+ */
+function CheckTowerPosition(tower : Tower) {
+    return Mathf.Approximately(Vector3.Distance(tower.transform.position, transform.position), 1);
 }
 
 /*
