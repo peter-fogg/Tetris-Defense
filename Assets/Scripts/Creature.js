@@ -34,8 +34,11 @@ function Update () {
 	// }
 //	attack(attackTower);
 //    }
-    if(location == null) {
+    if(location == null) { // our block got destroyed
 	Destroy(gameObject);
+    }
+    else if(!location.isMoving) { // this block is solidified
+	
     }
     if(path == null) { // figure out what we're doing with our life
 	path = Search();
