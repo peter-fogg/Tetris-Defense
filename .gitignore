@@ -8,3 +8,4 @@ Temp/
 *.pidb
 *.swp # Vim swap files
 Assembly-UnityScript.pidb
+*.sln
