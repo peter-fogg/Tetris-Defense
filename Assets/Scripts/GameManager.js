@@ -38,11 +38,11 @@ function Start () {
 }
 
 function Update () {
+	//spawns a creature every creatureTime seconds
 	if(Time.time - spawnTime > creatureTime) {
 		makeCreature();
 		spawnTime = Time.time;
 	}
-
 
 	if(Time.time > lastSpawned + spawnStep) {
 	    MakeBlockGroup();
