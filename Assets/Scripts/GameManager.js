@@ -65,7 +65,7 @@ function makeTower(pos : Vector3) {
 function makeCreature() {
 	var rand: float = Random.Range(0, blockList.Count);
 	var spawnBlock: GameObject = blockList[rand];
-	while(spawnBlock.GetComponent(Block).group.isMoving === true) {
+	while(spawnBlock.GetComponent(Block).group.isMoving === true || spawnBlock.GetComponent(Block).isOccupied === true) {
 		rand = Random.Range(0, blockList.Count);
 		spawnBlock = blockList[rand];
 	}
