@@ -109,10 +109,10 @@ function TraceBack(start : Block) {
  */
 function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFrom : Block) {
     var neighbors : Vector3[] = new Vector3[4];
-    neighbors[0] = new Vector3(position.x+1, position.y, position.z);
-    neighbors[1] = new Vector3(position.x-1, position.y, position.z);
-    neighbors[2] = new Vector3(position.x, position.y-1, position.z);
-    neighbors[3] = new Vector3(position.x, position.y+1, position.z);
+    neighbors[0] = new Vector3(position.x+1, position.y, 0);
+    neighbors[1] = new Vector3(position.x-1, position.y, 0);
+    neighbors[2] = new Vector3(position.x, position.y-1, 0);
+    neighbors[3] = new Vector3(position.x, position.y+1, 0);
     for(var p : Vector3 in neighbors) {
 	var g : GameObject = CheckPosition(p);
 	// don't explore blocks that don't exist or have already been visited
