@@ -10,7 +10,7 @@ var benemy : Block;   // best block
 var base : Block; //keeps track of the block that the tower is placed on
 var lastFired : float;
 var fireRate : float;
-var lerpedColor: Color = Color.white;
+var lerpedColor: Color = Color.cyan;
 
 function Start () {
     health = maxHealth = 10;
@@ -18,11 +18,12 @@ function Start () {
     range = 10; // decide what range of tower is
     fireRate = .2; // decide what firing freq is
     lastFired = 0;
+    renderer.material.color = lerpedColor;
 }
 
 function Update () {
 	//Damage/color change handling:
-	lerpedColor = Color.Lerp(Color.blue, Color.white,health/maxHealth);
+	lerpedColor = Color.Lerp(Color.red, Color.cyan,health/maxHealth);
    	renderer.material.color = lerpedColor;
 	
 	//if the tower's health is depleted, destroy the tower
