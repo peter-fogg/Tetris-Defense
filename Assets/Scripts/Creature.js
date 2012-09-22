@@ -91,6 +91,7 @@ function attack(tower: Tower) {
     }
     //inflicts "damage" amount of damage to a tower's health
     else {
+//	if(Mathf.Approximately(Vector3.Distance(tower.transform.position, transform.position))
 	if(Time.time > lastFired + fireRate) {
 	    tower.health -= damage;
 	    lastFired = Time.time;
