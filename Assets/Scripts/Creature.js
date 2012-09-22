@@ -9,12 +9,16 @@ var location : Block; // Where are we right now?
 var path : Stack.<Block>;
 var lastMoved : float;
 var moveRate : float;
+var lastFired : float;
+var fireRate : float;
 
 function Start () {
     health = 5;
     damage = 1;
     lastMoved = Time.time;
     moveRate = 1;
+    lastFired = Time.time;
+    fireRate = 1.5;
 }
 
 function Update () {
@@ -47,7 +51,7 @@ function Update () {
 	    block.GetComponent(Block).cameFrom.Remove(gameObject);
 	}
     }
-    else if(path.Count == 1) { // there's only one block left; it's our target
+    else if(path.Count <= 1) { // there's only one block left; it's our target
 	attack(path.Peek().tower);
     }
     else { // not in range, get going!
@@ -58,6 +62,7 @@ function Update () {
 function move() {
     if(Time.time > lastMoved + moveRate) {
 	var target : Block = path.Pop();
+	location = target;
 	transform.position = Vector3(target.transform.position.x,
 				     target.transform.position.y,
 				     transform.position.z);
@@ -68,10 +73,15 @@ function move() {
 function attack(tower: Tower) {
     if(tower == null) { // that tower is destroyed!
 	path = null; // reset our attack path
+	print("reset path");
     }
     //inflicts "damage" amount of damage to a tower's health
     else {
-	tower.health -= damage;
+	if(Time.time > lastFired + fireRate) {
+	    tower.health -= damage;
+	    print("attack! tower health is: " + tower.health);
+	    lastFired = Time.time;
+	}
     }
 }
 
