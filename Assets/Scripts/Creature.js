@@ -43,6 +43,9 @@ function Update () {
     }
     if(path == null) { // figure out what we're doing with our life
 	path = Search();
+	for(var block : GameObject in GameManager.blockList) {
+	    block.GetComponent(Block).cameFrom.Remove(gameObject);
+	}
     }
     else if(path.Count == 1) { // there's only one block left; it's our target
 	attack(path.Peek().tower);
@@ -80,7 +83,9 @@ function Search() {
     var worklist : Stack.<GameObject> = new Stack.<GameObject>();
     var currentPosition : Vector3; // which block we're exploring right now
     AddNeighbors(transform.position, worklist, location);
+    var i : int = 0;
     while(worklist.Count != 0) {
+	i++;
 	var go : GameObject = worklist.Pop();
 	var block : Block = go.GetComponent(Block);
 	if(block.isOccupied) {
@@ -89,7 +94,7 @@ function Search() {
 	}
 	AddNeighbors(block.transform.position, worklist, block);
     }
-    Debug.Log("No path found.");
+    Debug.Log("No path found. Value of i is: " + i);
     return null;
 }
 
@@ -120,6 +125,7 @@ function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFro
 	var g : GameObject = CheckPosition(p);
 	// don't explore blocks that don't exist or have already been visited
 	if(g != null && !g.GetComponent(Block).cameFrom.ContainsKey(gameObject)) {
+	    Debug.Log("Haven't been here before");
 	    worklist.Push(g);
 	    g.GetComponent(Block).cameFrom[gameObject] = cameFrom;
 	}
