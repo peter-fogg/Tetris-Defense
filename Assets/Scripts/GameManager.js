@@ -48,7 +48,6 @@ function Update () {
 	    MakeBlockGroup();
 	    lastSpawned = Time.time;
 	}
-    spawnStep = 3 - Time.time*.03;
 }
 
 function MakeBlockGroup () {
