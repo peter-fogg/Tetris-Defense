@@ -1,5 +1,7 @@
 #pragma strict
 
+import System.Collections.Generic;
+
 //var lastMoved : float;
 var health : float;
 //keeps track of the starting health
@@ -7,14 +9,15 @@ var maxHealth : float;
 //var isMoving : boolean; // solidified or not
 var tower : Tower; // might not be necessary?
 var isOccupied : boolean;
-// this might get fucked up if we've got more than on creature setting this variable...
-var cameFrom : Block; // Where was this block reached from? (for pathfinding)
+// kinda weird... creatures set cameFrom[gameObject] = location
+var cameFrom : Dictionary.<GameObject, Block>; // Where was this block reached from? (for pathfinding)
 var group : BlockGroup; // our parent
 //color to lerp between
 var lerpedColor : Color = Color.white;
 
 // Create the cube and any other bits.
 function Start () {
+    cameFrom = new Dictionary.<GameObject, Block>();
     isOccupied = false;
     health = maxHealth = 10;
 }
@@ -51,6 +54,7 @@ function makeTower(pos : Vector3) {
 }
 
 function OnDestroy() {
+	GameObject.Find("Score").GetComponent(Score).score++;
 	if(isOccupied === true) {
 		GameObject.Find("GameManager").GetComponent(GameManager).numTowers--;
 	    GameManager.towerList.Remove(tower.gameObject);

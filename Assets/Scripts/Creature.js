@@ -34,6 +34,12 @@ function Update () {
 	// }
 //	attack(attackTower);
 //    }
+    if(location == null) { // our block got destroyed
+	Destroy(gameObject);
+    }
+    else if(!location.isMoving) { // this block is solidified
+	
+    }
     if(path == null) { // figure out what we're doing with our life
 	path = Search();
     }
@@ -90,9 +96,9 @@ function Search() {
  */
 function TraceBack(start : Block) {
     var path : Stack.<Block> = new Stack.<Block>();
-    while(start.cameFrom != location) {
+    while(start.cameFrom[gameObject] != location) {
 	path.Push(start);
-	start = start.cameFrom;
+	start = start.cameFrom[gameObject];
     }
     return path;
 }
@@ -109,9 +115,10 @@ function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFro
     neighbors[3] = new Vector3(position.x, position.y+1, position.z);
     for(var p : Vector3 in neighbors) {
 	var g : GameObject = CheckPosition(p);
-	if(g != null) {
+	// don't explore blocks that don't exist or have already been visited
+	if(g != null && !g.GetComponent(Block).cameFrom.ContainsKey(gameObject)) {
 	    worklist.Push(g);
-	    g.GetComponent(Block).cameFrom = cameFrom;
+	    g.GetComponent(Block).cameFrom[gameObject] = cameFrom;
 	}
     }
 }
