@@ -14,6 +14,9 @@ var spawnStep : float; // how often to spawn a block group
 var lastSpawned : float;
 var numTowers: float;
 public static var maxTowers: float;
+var numCreatures: float;
+var creatureTime: float; //the time between creature spawns
+var spawnTime: float; //the time of the last creature spawn
 
 public var blockGroup : BlockGroup; // for Instantiate()
 
@@ -29,9 +32,19 @@ function Start () {
     topRow = Camera.main.ScreenToWorldPoint(Vector3(0, Camera.main.pixelHeight, 0)).y;
     numTowers = 0;
     maxTowers = 10;
+    numCreatures = 0;
+    creatureTime = 15;
+    spawnTime = Time.time;
 }
 
 function Update () {
+	if(Time.time - spawnTime > creatureTime) {
+		Debug.Log("Creature should spawn now.");
+		makeCreature();
+		spawnTime = Time.time;
+	}
+
+
 	if(Time.time > lastSpawned + spawnStep) {
 	    MakeBlockGroup();
 	    lastSpawned = Time.time;
@@ -48,6 +61,19 @@ function makeTower(pos : Vector3) {
 	var tower: GameObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
 	tower.transform.position = pos;
 	tower.AddComponent(Tower);
+}
+
+function makeCreature() {
+	var rand: float = Random.Range(0, blockList.Count);
+	var spawnBlock: GameObject = blockList[rand];
+	var creaturePos = spawnBlock.transform.position;
+	creaturePos.z -= 1;
+	var creature: GameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+	creature.transform.position = creaturePos;
+	creature.renderer.material.color = Color.green;
+	creature.AddComponent(Creature);
+	creature.GetComponent(Creature).location = spawnBlock.GetComponent(Block);
+	numCreatures++;
 }
 
 function OnGUI() {
