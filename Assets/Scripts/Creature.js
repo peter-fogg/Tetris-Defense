@@ -51,8 +51,17 @@ function Update () {
 	    block.GetComponent(Block).cameFrom.Remove(gameObject);
 	}
     }
-    else if(path.Count <= 1) { // there's only one block left; it's our target
-	attack(path.Peek().tower);
+    else if(path.Count == 1) { // there's only one block left; it's our target
+	var attackBlock : Block = path.Peek();
+	if(attackBlock == null) {
+	    path = null;
+	}
+	else {
+	    attack(attackBlock.tower);
+	}
+    }
+    else if(path.Count == 0) {
+	path = null;
     }
     else { // not in range, get going!
 	move();
@@ -62,10 +71,16 @@ function Update () {
 function move() {
     if(Time.time > lastMoved + moveRate) {
 	var target : Block = path.Pop();
-	location = target;
-	transform.position = Vector3(target.transform.position.x,
-				     target.transform.position.y,
-				     transform.position.z);
+	if(target != null &&
+	   CheckPosition(target.transform.position) != null) {
+	    location = target;
+	    transform.position = Vector3(target.transform.position.x,
+					 target.transform.position.y,
+					 transform.position.z);
+	}
+	else {
+	    path = null; // block doesn't exist, reset path
+	}
 	lastMoved = Time.time;
     }
 }
@@ -73,13 +88,11 @@ function move() {
 function attack(tower: Tower) {
     if(tower == null) { // that tower is destroyed!
 	path = null; // reset our attack path
-	print("reset path");
     }
     //inflicts "damage" amount of damage to a tower's health
     else {
 	if(Time.time > lastFired + fireRate) {
 	    tower.health -= damage;
-	    print("attack! tower health is: " + tower.health);
 	    lastFired = Time.time;
 	}
     }
@@ -90,13 +103,13 @@ function attack(tower: Tower) {
  * path is found, it is returned; otherwise returns null.
  */
 function Search() {
-    var worklist : Stack.<GameObject> = new Stack.<GameObject>();
+    var worklist : Queue.<GameObject> = new Queue.<GameObject>();
     var currentPosition : Vector3; // which block we're exploring right now
     AddNeighbors(transform.position, worklist, location);
     var i : int = 0;
     while(worklist.Count != 0) {
 	i++;
-	var go : GameObject = worklist.Pop();
+	var go : GameObject = worklist.Dequeue();
 	var block : Block = go.GetComponent(Block);
 	if(block.isOccupied) {
 		Debug.Log("Path found!");
@@ -125,7 +138,7 @@ function TraceBack(start : Block) {
  * Adds neighbors of a given position onto the worklist stack, if they exist. Also
  * sets the cameFrom variable of each block.
  */
-function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFrom : Block) {
+function AddNeighbors(position : Vector3, worklist : Queue.<GameObject>, cameFrom : Block) {
     var neighbors : Vector3[] = new Vector3[4];
     neighbors[0] = new Vector3(position.x+1, position.y, 0);
     neighbors[1] = new Vector3(position.x-1, position.y, 0);
@@ -136,7 +149,7 @@ function AddNeighbors(position : Vector3, worklist : Stack.<GameObject>, cameFro
 	// don't explore blocks that don't exist or have already been visited
 	if(g != null && !g.GetComponent(Block).cameFrom.ContainsKey(gameObject)) {
 	    Debug.Log("Haven't been here before");
-	    worklist.Push(g);
+	    worklist.Enqueue(g);
 	    g.GetComponent(Block).cameFrom[gameObject] = cameFrom;
 	}
     }
